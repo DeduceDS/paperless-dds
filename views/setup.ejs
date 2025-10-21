@@ -209,6 +209,7 @@
                                                 Azure
                                             </option>
                                         </select>
+                                        <p class="help-text">Selecciona un proveedor para mostrar los campos de API y modelo.</p>
                                     </div>
 
                                     <!-- OpenAI Settings -->
@@ -755,6 +756,36 @@
 
     <!-- Scripts -->
     <script src="js/setup.js"></script>
+    <!-- Fallback to force provider-specific fields to show even if external JS didn't bind yet -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const providerSelect = document.getElementById('aiProvider');
+            function showProviderFields() {
+                const map = {
+                    openai: 'openaiSettings',
+                    ollama: 'ollamaSettings',
+                    custom: 'customSettings',
+                    azure:  'azureSettings'
+                };
+                Object.values(map).forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.style.display = 'none';
+                });
+                const chosen = map[providerSelect?.value];
+                if (chosen) {
+                    const el = document.getElementById(chosen);
+                    if (el) el.style.display = 'block';
+                }
+            }
+            if (providerSelect) {
+                // Trigger the app's own handler (FormManager) if attached
+                try { providerSelect.dispatchEvent(new Event('change')); } catch (_) {}
+                // Ensure visibility regardless
+                showProviderFields();
+                providerSelect.addEventListener('change', showProviderFields);
+            }
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- Initialize textarea newlines -->
