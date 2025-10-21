@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deduce Data Solutions — Setup</title>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>Deduce Data Solutions Setup</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/setup.css">
@@ -17,7 +16,9 @@
     <script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
 </head>
 <body class="h-full">
-    
+    <button id="themeToggle" class="theme-toggle material-button-2">
+        <i class="fas fa-moon dark:fas fa-sun"></i>
+    </button>
 
     <div class="min-h-full">
         <nav class="modern-nav">
@@ -25,7 +26,7 @@
                 <div class="flex h-24 items-center justify-between">
                     <div class="flex items-center space-x-6">
                         <div>
-                            <h1 class="text-2xl font-bold">Deduce Data Solutions</h1>
+                            <h1 class="text-2xl font-bold">Deduce Data Solutions<small></h1>
                             <p class="text-sm text-secondary">Configuration Setup</p>
                         </div>
                     </div>
@@ -761,27 +762,6 @@
         document.addEventListener('DOMContentLoaded', (event) => {
             const systemPromptTextarea = document.getElementById('systemPrompt');
             systemPromptTextarea.value = systemPromptTextarea.value.replace(/\\n/g, '\n');
-            // Initialize provider-specific settings visibility
-            const providerSelect = document.getElementById('aiProvider');
-            function showProviderSettings(provider) {
-                const sections = document.querySelectorAll('.provider-settings');
-                sections.forEach(s => s.style.display = 'none');
-                const map = {
-                    openai: 'openaiSettings',
-                    ollama: 'ollamaSettings',
-                    custom: 'customSettings',
-                    azure: 'azureSettings'
-                };
-                const id = map[provider];
-                if (id) {
-                    const el = document.getElementById(id);
-                    if (el) el.style.display = 'block';
-                }
-            }
-            if (providerSelect) {
-                showProviderSettings(providerSelect.value);
-                providerSelect.addEventListener('change', () => showProviderSettings(providerSelect.value));
-            }
         });
     </script>
 
