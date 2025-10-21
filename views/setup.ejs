@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deduce Data Solutions Setup</title>
+    <title>Paperless-ai Setup</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/setup.css">
@@ -25,8 +25,9 @@
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="flex h-24 items-center justify-between">
                     <div class="flex items-center space-x-6">
+                        <img src="/favicon.ico" alt="Paperless AI Logo" style="height: 60px;">
                         <div>
-                            <h1 class="text-2xl font-bold">Deduce Data Solutions<small></h1>
+                            <h1 class="text-2xl font-bold">Paperless-AI <small><%= config.PAPERLESS_AI_VERSION %></small></h1>
                             <p class="text-sm text-secondary">Configuration Setup</p>
                         </div>
                     </div>
@@ -209,7 +210,6 @@
                                                 Azure
                                             </option>
                                         </select>
-                                        <p class="help-text">Selecciona un proveedor para mostrar los campos de API y modelo.</p>
                                     </div>
 
                                     <!-- OpenAI Settings -->
@@ -756,36 +756,6 @@
 
     <!-- Scripts -->
     <script src="js/setup.js"></script>
-    <!-- Fallback to force provider-specific fields to show even if external JS didn't bind yet -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const providerSelect = document.getElementById('aiProvider');
-            function showProviderFields() {
-                const map = {
-                    openai: 'openaiSettings',
-                    ollama: 'ollamaSettings',
-                    custom: 'customSettings',
-                    azure:  'azureSettings'
-                };
-                Object.values(map).forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.style.display = 'none';
-                });
-                const chosen = map[providerSelect?.value];
-                if (chosen) {
-                    const el = document.getElementById(chosen);
-                    if (el) el.style.display = 'block';
-                }
-            }
-            if (providerSelect) {
-                // Trigger the app's own handler (FormManager) if attached
-                try { providerSelect.dispatchEvent(new Event('change')); } catch (_) {}
-                // Ensure visibility regardless
-                showProviderFields();
-                providerSelect.addEventListener('change', showProviderFields);
-            }
-        });
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- Initialize textarea newlines -->
