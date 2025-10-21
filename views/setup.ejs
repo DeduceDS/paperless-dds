@@ -761,6 +761,27 @@
         document.addEventListener('DOMContentLoaded', (event) => {
             const systemPromptTextarea = document.getElementById('systemPrompt');
             systemPromptTextarea.value = systemPromptTextarea.value.replace(/\\n/g, '\n');
+            // Initialize provider-specific settings visibility
+            const providerSelect = document.getElementById('aiProvider');
+            function showProviderSettings(provider) {
+                const sections = document.querySelectorAll('.provider-settings');
+                sections.forEach(s => s.style.display = 'none');
+                const map = {
+                    openai: 'openaiSettings',
+                    ollama: 'ollamaSettings',
+                    custom: 'customSettings',
+                    azure: 'azureSettings'
+                };
+                const id = map[provider];
+                if (id) {
+                    const el = document.getElementById(id);
+                    if (el) el.style.display = 'block';
+                }
+            }
+            if (providerSelect) {
+                showProviderSettings(providerSelect.value);
+                providerSelect.addEventListener('change', () => showProviderSettings(providerSelect.value));
+            }
         });
     </script>
 
